@@ -1,2 +1,2 @@
 # Lab web 2022
-![ScreenShot]  (lab_1.PNG)
+! [Скриншот]  (lab_1.PNG)
