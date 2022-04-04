@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Value:
+  = @value.value
+%p
+  %b User:
+  = @value.user_id
+%p
+  %b Image:
+  = @value.image_id
+
+= link_to 'Edit', edit_value_path(@value)
+\|
+= link_to 'Back', values_path
