@@ -1,0 +1,26 @@
+- if current_user.nil?
+  %form{:method=>"post"}
+    - if @error
+      %div.alert.alert-danger.mb-3{:role=>"alert"}= t "login_error"
+    %div.mb-3
+      %label.form-label{:for=>"email"}= t "email_label"
+      %input.form-control#email{:type=>"email", :name=>"email", "aria-describedby": "emailHelp", :required=>1}
+    %div.mb-3
+      %label.form-label{:for=>"pass"}= t "password"
+      %input.form-control#pass{:type=>"password", :name=>"pass", :required=>1}
+    %button.btn.btn-primary{:type=>"submit"}= t "submit"
+
+  :javascript
+    $(document).ready(function(){
+      $('#signup').submit(function (e) {
+        let email = $('#email').val();
+        let pass = $('#pass').val();
+        if (email.trim().length === 0 || pass.trim().length === 0)
+          e.preventDefault();
+      });
+    });
+- else
+  :javascript
+    window.onload = function () {
+      window.location.href = '#{url_for :controller => 'work', :action => 'vacancy'}';
+    }

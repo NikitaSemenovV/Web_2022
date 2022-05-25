@@ -1,0 +1,127 @@
+%table.table
+  %thead
+    %tr
+      %th{:scope => 'col'} #
+      %th{:scope => 'col'}= t "organisation"
+      %th{:scope => 'col'}= t "title"
+      %th{:scope => 'col'}
+        %button.btn.btn-success#add-vac{:type => 'button'}
+          = t "add-vac"
+        - if params[:uid].blank?
+          = link_to t("vacancy_only"), {controller: "work", action: "vacancy", uid: current_user.id}, {class: "btn btn-primary"}
+        - else
+          = link_to t("vacancy_all"), {controller: "work", action: "vacancy"}, {class: "btn btn-primary"}
+  %tbody
+    - @vac.each_with_index do |t, i|
+      %tr
+        %td{:scope => 'row'}= i + 1
+        %td= t.user.name
+        %td= t.description
+        %td
+          %button.btn.btn-secondary.vac{:type => 'button', :dt => t.id}= t "more"
+          - if t.user == current_user
+            %button.btn.btn-secondary.edit-vac{:type => 'button', :dt => t.id}= t "edit"
+
+%div.modal#vacmodal
+  %div.modal-dialog
+    %div.modal-content
+      %div.modal-body
+
+%div.modal#vacform
+  %div.modal-dialog
+    %div.modal-content
+      %div.modal-body
+        %form
+          %input#hidden-type{:type=>'hidden'}
+          %input#hidden-id{:type=>'hidden'}
+          %div.mb-3
+            %label.form-label{:for=>"title"}= t "title-vac"
+            %input.form-control#title{:name=>"title"}(required)
+          %div.mb-3
+            %label.form-label{:for=>"description"}= t "description-vac"
+            %textarea.form-control#description{:name=>"description"}(required)
+          %div.mb-3
+            %label.form-label{:for=>"about"}= t "about-vac"
+            %textarea.form-control#about{:name=>"about"}(required)
+          %button.btn.btn-primary#submit{:type=>"button"}= t "submit"
+:javascript
+  $('#vacmodal').on('click', '#unreply', function () {
+    $.ajax({
+      method: 'post',
+      url: '#{work_reply_path}',
+      data: {id: $(this).attr('dt') * 1}
+    }).done((data) => {
+      if (data) {
+        $(this).attr('id', "unreply");
+        $(this).html('#{t "reply_drop"}');
+      } else {
+        $(this).attr('id', 'reply');
+        $(this).html('#{t "reply_make"}');
+      }
+    });
+  });
+  $('#vacmodal').on('click', '#reply', function () {
+    $.ajax({
+      method: 'post',
+      url: '#{work_reply_path}',
+      data: {id: $(this).attr('dt') * 1}
+    }).done((data) => {
+      if (data) {
+        $(this).attr('id', "unreply");
+        $(this).html('#{t "reply_drop"}');
+      } else {
+        $(this).attr('id', 'reply');
+        $(this).html('#{t "reply_make"}');
+      }
+    });
+  });
+  $(document).ready(function () {
+    $('.vac').on('click', function () {
+      $.ajax({
+        url:'#{work_vacancy_path}',
+        method: 'post',
+        data: {id: $(this).attr('dt') * 1}
+      }).done(function(data) {
+        $('#vacmodal .modal-body').html(data);
+        (new bootstrap.Modal('#vacmodal')).toggle();
+      })
+    });
+    $('#add-vac').click(function () {
+      $('#hidden-type').val('put');
+      (new bootstrap.Modal('#vacform')).toggle();
+    });
+    $('.edit-vac').click(function () {
+      $('#hidden-type').val('patch');
+      let d = $(this).attr('dt') * 1;
+      $.ajax({
+        url:'#{work_vacancy_path}',
+        method: 'post',
+        data: {id: d, api: true}
+      }).done(function(data) {
+        $('#hidden-id').val(d);
+        $('#vacform #title').val(data.title);
+        $('#vacform #description').val(data.description);
+        $('#vacform #about').val(data.about_us);
+        (new bootstrap.Modal('#vacform')).toggle();
+      });
+    });
+    $('#submit').click(function () {
+      if ($('#hidden-type').val() === 'put' || $('#hidden-type').val() === 'patch') {
+        $.ajax({
+          url:'#{work_vacancy_path}',
+          method: $('#hidden-type').val(),
+         xhrFields: {
+            withCredentials: true
+         },
+          data: {
+            title: $('#vacform #title').val(),
+            description: $('#vacform #description').val(),
+            about_us: $('#vacform #about').val(),
+            id: $('#hidden-id').val() * 1
+          }
+        }).done(function() {
+          window.location.reload();
+       });
+      }
+    });
+  });

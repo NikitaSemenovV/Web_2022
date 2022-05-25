@@ -1,0 +1,52 @@
+%form.needs-validation#signup(novalidate)
+  %div.mb-3
+    %label.form-label{:for=>"name"}= t "your_name"
+    %input.form-control#name{:name=>"name"}(required)
+  %div.mb-3
+    %label.form-label{:for=>"email"}= t "email_label"
+    %input.form-control#email{:type=>"email", :name=>"email", "aria-describedby": "emailHelp"}(required)
+  %div.mb-3#pass_field
+    %label.form-label{:for=>"pass"}= t "password"
+    %input.form-control#pass{:type=>"password", :name=>"pass", :minlength=>"6"}(required)
+  %div.mb-3
+    %label.form-label{:for=>"pass2"}= t "password_repeat"
+    %input.form-control#pass2{:type=>"password", :name=>"pass2"}(required)
+  %button.btn.btn-primary#sbm{:type=>"button"}= t "submit"
+
+
+:javascript
+  $(document).ready(function(){
+    $('#sbm').click(function (e) {
+      $('#signup')[0].classList.remove('was-validated');
+      $('#pass')[0].classList.remove('is-invalid');
+
+      $('#signup')[0] .checkValidity();
+
+      $('#signup')[0].classList.add('was-validated');
+      let email = $('#email').val();
+      let name = $('#name').val();
+      let pass = $('#pass').val();
+      let pass2 = $('#pass2').val();
+      if (email.trim().length === 0 || name.trim().length === 0 || pass.trim().length === 0 || pass2.trim().length === 0)
+        return;
+      if (pass.trim().length < 6 || pass.trim() !== pass2.trim()) {
+        $('#pass_field').find('.invalid-feedback').remove();
+        $('#pass_field').append('<div class="invalid-feedback">#{t("pass_msg")}</div>');
+        $('pass')[0].classList.add('is-invalid');
+      }
+      $.ajax({
+        url:'#{sessions_new_path}',
+        method: 'post',
+        data: {email: email, name: name, pass: pass, pass2: pass2}
+      }).done(function(data) {
+        if (data.url !== undefined) {
+          location.replace(data.url);
+          return;
+        }
+        data = JSON.parse(data);
+        if (data.url !== undefined) {
+          window.location.href = data.url;
+        }
+      })
+    });
+  });

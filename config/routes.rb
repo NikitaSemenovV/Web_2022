@@ -1,16 +1,25 @@
 Rails.application.routes.draw do
-  resources :themes
-  resources :images
-  resources :values
-  resources :users
+  get 'work/vacancy'
+  post 'work/vacancy'
+  put 'work/vacancy'
+  patch 'work/vacancy'
+
+  get 'work/summary'
+  post 'work/summary'
+
+  get 'work/reply'
+  post 'work/reply'
+  get 'work/replysum'
+
   root 'main#index'
 
   get 'main/index'
-  get 'main/contacts'
-  get 'main/help'
   get 'main/about'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  get 'main/work'
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  get 'sessions/new'
+  post 'sessions/new'
+  get 'sessions/create'
+  post 'sessions/create'
+  get 'sessions/destroy'
 end

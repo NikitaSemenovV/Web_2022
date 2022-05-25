@@ -1,0 +1,15 @@
+- if params[:mono].blank?
+  - if @vac.user != current_user
+    - if @has_reply > 0
+      %button.btn#unreply{:dt=>@vac.id}= t "reply_drop"
+    - else
+      %button.btn#reply{:dt=>@vac.id}= t "reply_make"
+  - if @vac.user == current_user
+    %p= link_to t("reply_view"), {controller: "work", action: "reply", vacancy: @vac.id}, {class: "btn btn-secondary"}
+    %p= t "reply_total" + " " + @has_reply.to_s
+%h1= @vac.title
+%h3.muted= t("created") + " " + @vac.user.name
+%p= t "desc_title"
+%p= @vac.description
+%p= t "about_title"
+%p= @vac.about_us

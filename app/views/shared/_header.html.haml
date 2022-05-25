@@ -1,0 +1,28 @@
+%nav.navbar.navbar-expand-lg.bg-light
+  %div.container-fluid
+    = link_to t("name"), main_index_path, class: "navbar-brand"
+    %button.navbar-toggler{:type=>"button", "data-bs-toggle":"collapse", "data-bs-targe":"#navbarSupportedContent", "aria-controls":"navbarSupportedContent", "aria-expanded":"false", "aria-label":"Toggle navigation"}
+      %span.navbar-toggler-icon
+    %div.collapse.navbar-collapse#navbarSupportedContent
+      %ul.navbar-nav.me-auto.mb-2.mb-lg-0
+        %li.nav-item= link_to t("about"), main_about_path, class: "nav-link active"
+        %li.nav-item.dropdown
+          %a.nav-link.dropdown-toggle#navbarDropdown{:href=>"#", :role=>"button", "data-bs-toggle":"dropdown", "aria-expanded":"false"}
+            = t "work"
+          %ul.dropdown-menu{"aria-labelledby":"navbarDropdown"}
+            %li.nav-item= link_to t("vacancy"), work_vacancy_path, class: "nav-link"
+            %li.nav-item= link_to t("summary"), work_summary_path, class: "nav-link"
+      %div.d-flex
+        %ul.navbar-nav.me-auto.mb-2.mb-lg-0
+          - if current_user.nil?
+            %li.nav-item= link_to t("signup"), sessions_new_path, class: "nav-link"
+            %li.nav-item= link_to t("login"), sessions_create_path, class: "nav-link"
+          - else
+            %li.nav-item
+              %span.nav-link= t("hello") + current_user.name
+            %li.nav-item= link_to t("logout"), sessions_destroy_path, class: "nav-link"
+          %li.nav-item
+            - if locale == :en
+              = link_to "ru", request.original_url.split('?').first.to_s + "?locale=" + (locale == :ru ? 'en' : 'ru'), class: "nav-link"
+            - else
+              = link_to "en", request.original_url.split('?').first.to_s + "?locale=" + (locale == :ru ? 'en' : 'ru'), class: "nav-link"

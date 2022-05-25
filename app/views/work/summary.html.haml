@@ -1,0 +1,13 @@
+%form{:method=>'post'}
+  %div.mb-3
+    %label.form-label{:for=>"title"}= t "sum_title"
+    %input.form-control#title{:name=>"title", :value => @sum.nil? ? '' : @sum.title}
+  %div.mb-3
+    %label.form-label{:for=>"about"}= t "sum_about"
+    %textarea.form-control#about{:name=>"about"}= @sum.nil? ? '' : @sum.about
+  %div.mb-3
+    %label.form-label{:for=>"skills"}= t "sum_skills"
+    %textarea.form-control#skills{:name=>"skills"}= @sum.nil? ? '' : @sum.skills
+  %button.btn.btn-primary{:type=>"submit"}= t "submit"
+  - unless @sum.nil?
+    =link_to t("sum_list"), {controller: "work", action: "reply", summary: @sum.id}, {class: "btn btn-primary"}

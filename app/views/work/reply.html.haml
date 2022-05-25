@@ -1,0 +1,48 @@
+%table.table
+  %thead
+    %tr
+      %th{:scope=>'col'}
+      %th{:scope=>'col'}= t "title"
+      %th{:scope=>'col'}= t "sum_title"
+  %tbody
+    - unless @work.blank?
+      - @work.each_with_index do |t, i|
+        %tr{:class => !t.watched ? 'table-primary' : ''}
+          %td{:scope=>'row'}= i + 1
+          %td.vac{:dt=>t.vacancy.id}= t.vacancy.title
+          %td.sum{:dt=>t.summery.id, :rpl => t.id}= t.summery.title
+%div.modal#workmodal
+  %div.modal-dialog
+    %div.modal-content
+      %div.modal-body
+
+:javascript
+  $(document).ready(function (){
+    let modal = new bootstrap.Modal('#workmodal');
+    let sel = $('#workmodal .modal-body');
+    $('.vac').click(function() {
+    let id = $(this).attr('dt') * 1;
+      $.ajax({
+        url:'#{work_vacancy_path}',
+        method: 'post',
+        data: {id: id, mono: true}
+      }).done(function(data) {
+        sel.html(data);
+        modal.toggle();
+      });
+    });
+    $('.sum').click(function () {
+    let id = $(this).attr('dt') * 1;
+    let rpl = $(this).attr('rpl') * 1;
+      $.ajax({
+        url:'#{work_replysum_path}&id='+id+"&rpl="+rpl,
+        method: 'get',
+         xhrFields: {
+            withCredentials: true
+         }
+      }).done(function(data) {
+        sel.html(data);
+        modal.toggle();
+      });
+    });
+  });

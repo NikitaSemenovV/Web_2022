@@ -1,0 +1,85 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t "hello"
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t("hello") %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   "true": "foo"
+#
+# To learn more, please read the Rails Internationalization guide
+# available at https://guides.rubyonrails.org/i18n.html.
+
+ru:
+  hello: "Привет, друг "
+  name: "Recrute"
+  home: "Вербовать"
+  about: "Описание"
+  login: "Логин"
+  email_label: "Email адрес"
+  password: "Пароль"
+  submit: "Представлять на рассмотрение"
+  your_name: "Ваше имя"
+  password_repeat: "Повторить пароль"
+  login_error: "Неверный адрес электронной почты/пароль"
+  pass_msg: "Указан слишком маленький пароль"
+  signup: "Зарегистрироваться"
+  work: "Работающий"
+  vacancy: "Вакансия"
+  summary: "Резюме"
+  welcome: "Добро пожаловать в нашу кадровую базу"
+  welcome_sub: "Войдите, чтобы создать резюме и начать поиск новой работы"
+  about_text: "Последняя туча рассеянной бури!
+Одна ты несешься по ясной лазури,
+Одна ты наводишь унылую тень,
+Одна ты печалишь ликующий день.
+Ты небо недавно кругом облегала,
+И молния грозно тебя обвивала;
+И ты издавала таинственный гром
+И алчную землю поила дождем.
+Довольно, сокройся! Пора миновалась,
+Земля освежилась, и буря промчалась,
+И ветер, лаская листочки древес,
+Тебя с успокоенных гонит небес."
+  organisation: "Организация"
+  title: "Название вакансии"
+  more: "Более"
+  created: "созданный"
+  desc_title: "О вакансии"
+  about_title: "Немного о нас"
+  logout: "Выйти"
+  add-vac: "Добавить"
+  edit: "Редактировать"
+  title-vac: "Заголовок"
+  description-vac: "Описание"
+  about-vac: "Описание"
+  sum_title: "Заголовок"
+  sum_about: "О вас"
+  sum_skills: "Ваши навыки"
+  reply_make: "Отвечать"
+  reply_drop: "Не отвечать"
+  reply_view: "Посмотреть ответы на эту вакансию"
+  reply_total: "Всего ответов"
+  vacancy_only: "Только мои"
+  vacancy_all: "Показать все"
+  user: "пользователем"
+  sum_list: "Покажи свои ответы"

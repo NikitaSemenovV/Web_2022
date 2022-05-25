@@ -1,5 +1,5 @@
 !!!
-%html
+%html.h-100
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title Blog
@@ -8,8 +8,9 @@
     = csp_meta_tag
     = favicon_link_tag "favicon.ico"
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
-    = javascript_importmap_tags
-  %body
+    %script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+    %script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js")
+  %body.d-flex.flex-column.justify-content-between.h-100
     = render 'shared/header'
     .container
       = yield

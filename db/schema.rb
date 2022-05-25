@@ -10,22 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_04_203009) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_18_040837) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "images", force: :cascade do |t|
-    t.string "name"
-    t.string "file"
-    t.float "ave_value"
-    t.integer "theme_id"
+  create_table "replies", force: :cascade do |t|
+    t.integer "vacancy_id"
+    t.integer "summery_id"
+    t.boolean "watched"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "themes", force: :cascade do |t|
-    t.string "name"
-    t.integer "qty_items"
+  create_table "summeries", force: :cascade do |t|
+    t.string "title"
+    t.string "about"
+    t.string "skills"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -33,14 +34,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_04_203009) do
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
+    t.string "password_digest"
+    t.string "remember_token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "values", force: :cascade do |t|
-    t.integer "value"
+  create_table "vacancies", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.string "about_us"
     t.integer "user_id"
-    t.integer "image_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
